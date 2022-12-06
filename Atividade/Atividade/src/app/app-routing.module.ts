@@ -10,7 +10,15 @@ const routes: Routes = [
   {
     path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+  },  {
+    path: 'contato-criar',
+    loadChildren: () => import('./contato-criar/contato-criar.module').then( m => m.ContatoCriarPageModule)
+  },
+  {
+    path: 'contato-editar',
+    loadChildren: () => import('./contato-editar/contato-editar.module').then( m => m.ContatoEditarPageModule)
   }
+
 ];
 
 @NgModule({
