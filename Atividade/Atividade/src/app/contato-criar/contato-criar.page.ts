@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ContatoService } from '../shared/contato.service';
 
 @Component({
   selector: 'app-contato-criar',
@@ -7,9 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContatoCriarPage implements OnInit {
 
-  constructor() { }
-
+  contatoForm!: FormGroup;
+  constructor(
+    private aptService: ContatoService,
+    private router: Router,
+    public fb: FormBuilder
+  ) { }
   ngOnInit() {
+    this.contatoForm = this.fb.group({
+      nome: [''],
+      email: [''],
+      telefone: ['']
+    })
   }
-
+  onSubmit(): void {
+    if (!this.contatoForm.valid) {
+        this.aptService.createContato(this.contatoForm.value).then(res => {
+        console.log(res)
+        this.contatoForm.reset();
+        this.router.navigate(['/home']);
+      })
+        .catch(error => console.log(error));
+    }
+  }
 }
